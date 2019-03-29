@@ -3,10 +3,9 @@
   "version": "0.1.0",
   "description": "Spoon - Self-hosted feedback system as an open source Olark alternative",
   "main": "dist/spoon.js",
-  "repository": "https://",
+  "repository": "https://github.com/christiansandor/spoon.git",
   "author": "Sandor Krisztian <npm@christiansandor.com>",
   "license": "GPL-3.0",
-  "private": true,
   "scripts": {
     "start": "webpack --mode development --watch",
     "build": "webpack --mode production"
