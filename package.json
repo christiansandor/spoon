@@ -1,0 +1,40 @@
+{
+  "name": "spoon",
+  "version": "0.1.0",
+  "description": "Spoon - Self-hosted feedback system as an open source Olark alternative",
+  "main": "dist/spoon.js",
+  "repository": "https://",
+  "author": "Sandor Krisztian <npm@christiansandor.com>",
+  "license": "GPL-3.0",
+  "private": true,
+  "scripts": {
+    "start": "webpack --mode development --watch",
+    "build": "webpack --mode production"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.4.0",
+    "@babel/preset-env": "^7.4.2",
+    "@babel/preset-react": "^7.0.0",
+    "@types/node": "^11.11.5",
+    "@types/react": "^16.8.8",
+    "@types/react-dom": "^16.8.3",
+    "autoprefixer": "^9.5.0",
+    "awesome-typescript-loader": "^5.2.1",
+    "babel-loader": "^8.0.5",
+    "css-loader": "^2.1.1",
+    "node-sass": "^4.11.0",
+    "postcss-loader": "^3.0.0",
+    "postcss-modules": "^1.4.1",
+    "raw-loader": "^2.0.0",
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4",
+    "sass": "^1.17.3",
+    "sass-loader": "^7.1.0",
+    "source-map-loader": "^0.2.4",
+    "style-loader": "^0.23.1",
+    "typescript": "^3.4.1",
+    "url-loader": "^1.1.2",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0"
+  }
+}

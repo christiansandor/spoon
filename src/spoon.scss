@@ -1,0 +1,412 @@
+@import "spoon.variables";
+
+.main,
+.main * {
+  box-sizing: border-box;
+  font-family: Helvetica Neue, sans-serif !important;
+  -webkit-font-smoothing: antialiased !important;
+}
+
+.main {
+  display: block;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  z-index: 99999999999999999999999999999;
+  width: $content-width;
+  max-width: 100%;
+  pointer-events: auto;
+  color: $color-text;
+}
+
+.buttonBorder {
+  position: relative;
+  user-select: none;
+  transform-style: preserve-3d;
+
+  &::before {
+    display: block;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: calc(100% + 6px);
+    width: calc(100% + 6px);
+    border-radius: 99999px;
+    opacity: .2;
+    transition: transform .2s ease, opacity .2s ease, height .2s ease, width .2s ease;
+    transform: translateZ(-1px) translate(-3px, -3px);
+    transform-origin: center center;
+    background: $color;
+  }
+
+  &:hover::before {
+    opacity: .4;
+    height: calc(100% + 8px);
+    width: calc(100% + 8px);
+    transform: translateZ(-1px) translate(-4px, -4px);
+  }
+
+  &:active::before {
+    opacity: .8;
+  }
+
+  &:disabled,
+  &[disabled],
+  &.disabled {
+    cursor: default;
+    background: $color-disabled;
+
+    &::before {
+      opacity: 0;
+    }
+  }
+}
+
+.background {
+  display: block;
+  position: absolute;
+  bottom: -50px;
+  right: -50px;
+  z-index: 1;
+  height: $background-height;
+  width: 100%;
+  transition: opacity .3s ease;
+  opacity: 0;
+  pointer-events: none;
+  filter: blur(100px);
+  background: linear-gradient(135deg, rgba(black, 0), rgba(black, .2));
+
+  &.active {
+    opacity: 1;
+  }
+}
+
+.trigger {
+  @extend .buttonBorder;
+
+  display: block;
+  position: absolute;
+  bottom: $spacing;
+  right: $spacing;
+  z-index: 3;
+  height: $button-size;
+  width: $button-size;
+  cursor: pointer;
+  border-radius: 99999px;
+  pointer-events: none;
+  transition: background .2s ease, transform .3s cubic-bezier(0.175, 0.885, 0.320, 1.275), opacity .3s ease;
+  transform: scale(0);
+  opacity: 0;
+  background: $color url('feedback.png') no-repeat center center / 30px;
+
+  &.showing {
+    pointer-events: auto;
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  &.active {
+    background-image: url('multiply.png');
+    background-size: 20px;
+  }
+
+  &::after {
+    display: block;
+    content: '1';
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 2px 4px;
+    border-radius: 4px;
+    color: white;
+    background: #f45;
+    font-size: 11px;
+    font-weight: bold;
+    transition: opacity .3s ease;
+    opacity: 0;
+  }
+
+  &.alert::after {
+    opacity: 1;
+  }
+}
+
+.message {
+  display: none;
+  position: absolute;
+  bottom: #{$spacing * 2 + $button-size};
+  right: $spacing;
+  z-index: 2;
+  max-height: calc(100vh - #{$spacing * 3 + $button-size});
+  width: calc(100% - #{$spacing * 2});
+  max-width: $message-width;
+  padding-top: $icon-size + 12px;
+  padding-left: $icon-size + 12px;
+  transition: transform .4s ease-out, opacity .4s ease;
+  opacity: 0;
+  transform: translateY($spacing);
+  font-size: $font-message-size;
+
+  &.active {
+    display: block;
+  }
+
+  &:hover {
+    .messageClose {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  &.showing {
+    opacity: 1;
+    transform: none;
+  }
+
+  &.hiding {
+    pointer-events: none;
+    transition-timing-function: ease-in, ease;
+  }
+}
+
+.messageClose {
+  @extend .buttonBorder;
+
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: $icon-size;
+  width: $icon-size;
+  border-radius: 100%;
+  transition: transform .2s ease-out, opacity .2s ease;
+  opacity: 0;
+  transform: translateY(4px);
+  cursor: pointer;
+  background: $color url('multiply.png') no-repeat center center / 20px;
+}
+
+.messageIcon {
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: $icon-size;
+  width: $icon-size;
+  border-radius: 9999999px;
+  background: white url('businessman.png') no-repeat center center / 20px;
+  box-shadow: 0 12px 24px rgba(black, .1);
+}
+
+.messageContent {
+  display: block;
+  position: relative;
+  width: 100%;
+  padding: $message-padding $message-padding-x;
+  border-radius: 8px;
+  transition: box-shadow .3s ease;
+  cursor: pointer;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(black, 0), 0 12px 24px rgba(black, .1);
+  background-color: white;
+
+  &:hover {
+    box-shadow: 0 4px 8px rgba(black, .1), 0 12px 24px rgba(black, .1);
+  }
+
+  p {
+    display: block;
+    margin: 12px 0 0;
+    line-height: $font-size + 3px;
+  }
+}
+
+.messageAuthor {
+  color: $color-muted;
+}
+
+.content {
+  display: block;
+  position: absolute;
+  bottom: #{$spacing * 2 + $button-size};
+  right: $spacing;
+  z-index: 2;
+  max-height: calc(100vh - #{$spacing * 3 + $button-size});
+  width: calc(100% - #{$spacing * 2});
+  max-width: $content-width;
+  border-radius: 8px;
+  overflow: hidden;
+  overflow-y: auto;
+  transition: transform .4s ease-out, opacity .4s ease;
+  opacity: 0;
+  transform: translateY($spacing);
+  box-shadow: 0 12px 24px rgba(black, .1);
+  background-color: white;
+
+
+  &.showing {
+    opacity: 1;
+    transform: none;
+  }
+
+  &.hiding {
+    pointer-events: none;
+    transition-timing-function: ease-in, ease;
+  }
+}
+
+.inner {
+  position: relative;
+}
+
+.header {
+  display: block;
+  position: relative;
+  padding: $content-padding $content-padding-x;
+  padding-left: #{$content-padding * 2 + $icon-size};
+  color: white;
+  background: $color-gradient;
+  user-select: none;
+}
+
+.icon {
+  display: inline-block;
+  position: absolute;
+  top: $content-padding;
+  left: $content-padding-x;
+  height: $icon-size;
+  width: $icon-size;
+  opacity: 0;
+  animation: translateY .4s ease .2s, opacity .4s ease .2s;
+  animation-fill-mode: forwards;
+  background: url('feedback.png') no-repeat center center / 30px;
+}
+
+.title,
+.subtitle {
+  display: block;
+  opacity: 0;
+  animation: translateY .4s ease .3s, opacity .4s ease .3s;
+  animation-fill-mode: forwards;
+}
+
+.title {
+  margin-bottom: 8px;
+  font-size: 24px;
+}
+
+.subtitle {
+  color: hsl(204, 99%, 87%);
+  font-size: $font-size;
+}
+
+.form {
+  display: block;
+  padding: $content-padding;
+  transition: opacity .3s ease;
+  opacity: 1;
+  animation: opacity .4s ease .6s;
+  animation-fill-mode: backwards;
+
+  &.hidden {
+    pointer-events: none;
+    opacity: 0;
+    animation: none;
+  }
+}
+
+.group {
+  display: block;
+  margin-bottom: $content-padding;
+}
+
+.label {
+  display: block;
+  margin: 0 0 12px;
+  font-size: $font-size;
+}
+
+.input {
+  display: block;
+  appearance: none;
+  height: auto;
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid $color-input-border;
+  border-radius: 4px;
+  transition: border-color .2s ease, background-color .2s ease;
+  color: $color-text;
+  background-color: $color-input-background;
+  font-size: $font-size;
+  font-weight: normal;
+  outline: none;
+
+  &::placeholder {
+    color: $color-input-placeholder;
+  }
+
+  &:focus,
+  &:active {
+    border-color: $color;
+    background-color: white;
+  }
+}
+
+.textarea {
+  @extend .input;
+
+  min-height: 160px;
+  resize: vertical;
+}
+
+.buttons {
+  display: block;
+  margin-top: 20px;
+  text-align: right;
+  font-size: 0;
+}
+
+.submitButton {
+  @extend .buttonBorder;
+
+  display: inline-block;
+  padding: 12px 24px;
+  border-radius: 999999999999px;
+  cursor: pointer;
+  color: white;
+  transition: background-color .2s ease;
+  background: $color;
+  font-size: $font-size;
+  font-weight: normal;
+}
+
+.submittedMessage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  padding: $content-padding $content-padding-x;
+  opacity: 0;
+  animation: opacity .4s ease-out .5s;
+  animation-fill-mode: forwards;
+  text-align: center;
+  user-select: none;
+
+  img {
+    margin: 0 auto 24px auto;
+  }
+
+  p {
+    display: block;
+    margin-top: 24px;
+    color: $color-muted;
+    text-align: center;
+    font-size: $font-message-size;
+  }
+}

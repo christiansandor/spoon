@@ -1,0 +1,42 @@
+$color: hsl(204, 99%, 49%);
+$color-darker: hsl(204, 99%, 34%);
+$color-gradient: linear-gradient(135deg, $color, $color-darker);
+$color-text: #222;
+$color-muted: hsl(204, 40%, 49%);
+$color-disabled: #e6e6e6;
+$color-input-border: #e6e8f0;
+$color-input-placeholder: #c0ced0;
+$color-input-background: hsl(200, 30%, 98%);
+
+$spacing: 20px;
+$background-height: 600px;
+$button-size: 60px;
+$message-width: 300px;
+$message-padding: 16px;
+$message-padding-x: 20px;
+$content-width: 400px;
+$content-padding: 24px;
+$content-padding-x: 32px;
+$font-size: 14px;
+$font-message-size: 13px;
+$icon-size: 30px;
+
+@keyframes translateY {
+  from {
+    transform: translateY($spacing);
+  }
+
+  to {
+    transform: none;
+  }
+}
+
+@keyframes opacity {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
