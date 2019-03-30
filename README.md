@@ -75,3 +75,5 @@ Nearly every aspect of the module can be customised, with the following properti
 ### Share the 💖 love
 It would help a lot if you could ⭐ the repository. :)
 
+#### More
+Spoon uses [Icons8](https://icons8.com) free licence for icons.
